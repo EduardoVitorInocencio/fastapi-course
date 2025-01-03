@@ -1,25 +1,24 @@
-from database import Base
-
 from sqlalchemy import Column, Integer, Boolean, String, ForeignKey
+from database import Base
 
 class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True)
-    hashed_password = Column(String)
-    email = Column(String, unique=True)
-    first_name = Column(String)
-    last_name = Column(String)
-    role = Column(String, default='user')
+    username = Column(String, unique=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    role = Column(String, default='user', nullable=False)
     is_active = Column(Boolean, default=True)
 
 class Todos(Base):
     __tablename__ = 'todos'
-    
+
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    description = Column(String)
-    priority = Column(Integer)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    priority = Column(Integer, nullable=False)
     complete = Column(Boolean, default=False)
-    owner_id = Column(Integer, ForeignKey('users.id'))
+    owner_id = Column(Integer, ForeignKey('users.id'), nullable=False)
